@@ -1,0 +1,17 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+
+# Virtual Environment
+.venv
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# logs
+logs/
+
+# env file
+.env
