@@ -2,7 +2,7 @@
 
 ## Contexte académique
 
-Ce projet est réalisé dans le cadre d’un enseignement de **Traitement Automatique du Langage Naturel (NLP)** au niveau **Master 2**.  
+Ce projet est réalisé dans le cadre d’un enseignement de **Traitement Automatique du Langage Naturel (NLP)** au niveau **Master 2**.
 Il a pour objectif d’appliquer les méthodes de **fine-tuning de modèles Transformer** présentées en cours à la tâche de **Question Answering extractif**, en utilisant le dataset **SQuAD v1.1**.
 
 Le projet s’appuie sur l’écosystème **Hugging Face** (`datasets`, `transformers`) et met l’accent sur la **méthodologie**, la **comparaison de modèles** et l’**analyse des résultats**, plutôt que sur le développement d’une infrastructure de production.
@@ -40,11 +40,11 @@ Chaque exemple contient :
 
 Les modèles suivants sont fine-tunés et comparés :
 
-- **DistilBERT (distilbert-base-uncased)**  
+- **DistilBERT (distilbert-base-uncased)**
   Modèle compact et rapide, utilisé comme baseline.
-- **BERT (bert-base-uncased)**  
+- **BERT (bert-base-uncased)**
   Modèle de référence pour les tâches de NLP.
-- **RoBERTa (roberta-base)**  
+- **RoBERTa (roberta-base)**
   Variante optimisée de BERT, souvent plus performante mais plus coûteuse.
 
 Tous les modèles sont utilisés dans un cadre de **Question Answering extractif** (encoder-only).
@@ -72,29 +72,62 @@ Les choix d’hyperparamètres (longueur maximale, stride, batch size) sont just
 ```text
 qa-finetuning-squad-webapp/
 │
-├── app/                  # Interface applicative
-│
-├── data/
-│   ├── raw/              # Données brutes 
-│   └── processed/        # Données prétraitées / exportées
-│
-├── deployment/
-│   └── hf_spaces/        # Scripts ou configurations pour Hugging Face Spaces
+├── apps/
+│   └── multi_model_comparison/   # Gradio app: compare 3 models
+│       ├── app.py
+│       ├── requirements.txt
+│       └── README.md
 │
 ├── models/
-│   ├── distilbert_squad/ # Modèles fine-tunés + résultats
-│   ├── bert_squad/
-│   └── roberta_squad/
+│   ├── distilbert_squad_finetuned/   # Fine-tuned DistilBERT
+│   ├── roberta_squad_finetuned/      # Fine-tuned RoBERTa
+│   ├── deberta_squad_finetuned/      # Fine-tuned DeBERTa
+│   └── ...
 │
 ├── notebooks/
-│   ├── 01_exploration_donnees.ipynb
+│   ├── 01_baseline_evaluation.ipynb
 │   ├── 02_finetuning_distilbert.ipynb
-│   ├── 03_finetuning_bert.ipynb
-│   ├── 04_finetuning_roberta.ipynb
+│   ├── 03_finetuning_roberta.ipynb
+│   ├── 04_finetuning_deberta.ipynb
 │   └── 05_comparaison_modeles.ipynb
 │
-├── scripts/              # Scripts utilitaires
+├── scripts/
+│   ├── upload_to_hf.py         # Script d'upload HuggingFace
+│   └── ...
 │
-├── requirements.txt      # Dépendances Python
-├── README.md             # Documentation du projet
-└── .venv/                # Environnement virtuel
+├── requirements.txt
+├── README.md
+└── .venv/
+```
+
+---
+
+## Exemple : uploader un modèle fine-tuné sur Hugging Face Hub
+
+```python
+from transformers import AutoModelForQuestionAnswering, AutoTokenizer
+from huggingface_hub import create_repo
+
+model_dir = "models/distilbert_squad_finetuned"
+repo_id = "khaledbouabdallah/distilbert-squad-finetuned"
+
+# Créer le repo (si besoin)
+create_repo(repo_id, exist_ok=True)
+
+# Charger et uploader
+model = AutoModelForQuestionAnswering.from_pretrained(model_dir)
+tokenizer = AutoTokenizer.from_pretrained(model_dir)
+model.push_to_hub(repo_id)
+tokenizer.push_to_hub(repo_id)
+```
+
+---
+
+## Déployer l'app Gradio sur Hugging Face Spaces
+
+1. Créez un Space sur https://huggingface.co/spaces (SDK: Gradio)
+2. Uploadez les fichiers de `apps/multi_model_comparison/` :
+   - `app.py`
+   - `requirements.txt`
+   - `README.md`
+3. L'app sera accessible en ligne (ex: https://huggingface.co/spaces/khaledbouabdallah/squad-qa-comparison)
