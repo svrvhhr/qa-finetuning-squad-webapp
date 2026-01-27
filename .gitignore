@@ -15,3 +15,9 @@ logs/
 
 # env file
 .env
+
+# Models
+models/
+
+# Plots
+*.png
