@@ -1,0 +1,80 @@
+{
+  "date_comparison": "2026-01-27 16:50:48",
+  "num_models": 3,
+  "models_compared": [
+    "distilbert-base-uncased",
+    "roberta-base",
+    "microsoft/deberta-v3-base"
+  ],
+  "best_f1": {
+    "model": "DeBERTa",
+    "score": 93.01473787274658
+  },
+  "fastest": {
+    "model": "DistilBERT",
+    "inference_time_ms": 3.21042537689209
+  },
+  "most_efficient": {
+    "model": "DistilBERT",
+    "efficiency": 26.292685370798694
+  },
+  "detailed_results": [
+    {
+      "model_name": "distilbert-base-uncased",
+      "model_type": "distilbert",
+      "finetuned": true,
+      "f1": 84.41070434105153,
+      "exact_match": 75.80889309366131,
+      "training_time_minutes": 55.61639648278554,
+      "avg_inference_time_ms": 3.21042537689209,
+      "total_parameters": 66364418,
+      "trainable_parameters": 66364418,
+      "num_train_samples": 87599,
+      "num_eval_samples": 10570,
+      "num_epochs": 3,
+      "batch_size": 64,
+      "learning_rate": 3e-05,
+      "max_length": 384,
+      "doc_stride": 128,
+      "display_name": "DistilBERT"
+    },
+    {
+      "model_name": "roberta-base",
+      "model_type": "roberta",
+      "finetuned": true,
+      "f1": 91.95973256997178,
+      "exact_match": 85.6480605487228,
+      "training_time_minutes": 101.91337714592616,
+      "avg_inference_time_ms": 7.544159889221191,
+      "total_parameters": 124056578,
+      "trainable_parameters": 124056578,
+      "num_train_samples": 87599,
+      "num_eval_samples": 10570,
+      "num_epochs": 3,
+      "batch_size": 32,
+      "learning_rate": 3e-05,
+      "max_length": 384,
+      "doc_stride": 128,
+      "display_name": "RoBERTa"
+    },
+    {
+      "model_name": "microsoft/deberta-v3-base",
+      "model_type": "deberta",
+      "finetuned": true,
+      "f1": 93.01473787274658,
+      "exact_match": 86.5752128666036,
+      "training_time_minutes": 133.7895169019699,
+      "avg_inference_time_ms": 32.77313709259033,
+      "total_parameters": 183833090,
+      "trainable_parameters": 183833090,
+      "num_train_samples": 87599,
+      "num_eval_samples": 10570,
+      "num_epochs": 3,
+      "batch_size": 16,
+      "learning_rate": 3e-05,
+      "max_length": 384,
+      "doc_stride": 128,
+      "display_name": "DeBERTa"
+    }
+  ]
+}
